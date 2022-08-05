@@ -1,0 +1,151 @@
+
+/******************************************************************************
+  * @attention
+  *
+  * <h2><center>&copy; COPYRIGHT 2016 STMicroelectronics</center></h2>
+  *
+  * Licensed under ST MYLIBERTY SOFTWARE LICENSE AGREEMENT (the "License");
+  * You may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at:
+  *
+  *        http://www.st.com/myliberty
+  *
+  * Unless required by applicable law or agreed to in writing, software 
+  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied,
+  * AND SPECIFICALLY DISCLAIMING THE IMPLIED WARRANTIES OF MERCHANTABILITY,
+  * FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  *
+******************************************************************************/
+
+
+/*! \file
+ *
+ *  \author 
+ *
+ *  \mainpage NDEF (NFC Data Exchange Format)
+ *
+ *  The NDEF layer provides several functionalities required for NDEF message management.
+ *  
+ *  <br>
+ *  The NDEF layer is MISRA C 2012 compliant (Motor Industry Software Reliability Association).
+ *  <br>
+ *      
+ *  The NFC technologies currently supported by the NDEF layer are:
+ *  <ul>
+ *    <li> T2T
+ *    <li> T3T
+ *    <li> T4AT
+ *    <li> T4BT
+ *    <li> T5T
+ *  </ul>
+ *  
+ *  
+ *  The NDEF library design is split in RF Technology-dependent layer and RF Technology-independent layer:
+ *  <ul>
+ *    <li> Message, record and supported types management layer (Technology independent)
+ *    <li> NDEF wrapper layer abstracting the underlying technologies
+ *    <li> NDEF Technology layer defining a common API on top of the RFAL (Technology dependent)
+ *  </ul>
+ * 
+ * The NDEF wrapper on top of the NDEF Technology-dependent components allows to manage NDEF tags without
+ * taking care of the underlying NFC Technologies.
+ *
+ * <table align="center" cellpadding=20 cellspacing=0 border=1px>
+ * <caption align="top">NDEF</caption>
+ * <tr>
+ *  <td colspan=7 align=center><p>\link ndef_message.h Message\endlink, \link ndef_record.h Record\endlink and \link ndef_types.h supported types\endlink </p></td>
+ * </tr>
+ * <tr>
+ *  <td colspan=7 align=center><p>\link ndef_poller.h NDEF Wrapper\endlink </p></td>
+ * </tr>
+ * <tr>
+ *  <td align=center colspan=2><p>\link ndef_t2t.h NDEF T2T\endlink</p></td>
+ *  <td align=center><p>\link ndef_t3t.h NDEF T3T\endlink</p></td>
+ *  <td align=center colspan=2><p>\link ndef_t4t.h NDEF T4T\endlink</p></td>
+ *  <td align=center><p>\link ndef_t5t.h NDEF T5T\endlink</p></td>
+ * </tr>
+ * <tr>
+ *  <td colspan=7 align=center><p>RFAL</p></td>
+ * </tr>
+ * <tr>
+ *  <td colspan=2 align=center><p>ST25R3911</p></td>
+ *  <td colspan=3 align=center><p>ST25R3916</p></td>
+ *  <td colspan=2 align=center><p>ST25R95</p></td>
+ * </tr>
+ * </table>
+ *
+ *
+ * The types currently supported are the following:
+ * <ul>
+ *    <li> RTD Device Information
+ *    <li> RTD Text
+ *    <li> RTD URI
+ *    <li> AAR (Android Application Record)
+ *    <li> vCard
+ *    <li> Wifi
+ *  </ul>
+ *
+ *
+ *  <br><hr>
+ *
+ *  <h3>Examples</h3>
+ *  Two NDEF usage examples are provided here to show how to create and read message, records and the supported types:
+ *  <ul>
+ *  <li>\ref ndef_example_read.c</li>:<br> In this example, an NFC device is detected, activated and the NDEF content is read from the tag.
+ *  <li>\ref ndef_example_write.c</li>:<br> In this example, an NFC device is detected, activated and an NDEF message is encoded and written to the tag.
+ *  </ul>
+ *
+ *
+ *  <br><hr>
+ *  <h3>Setting up NDEF</h3>
+ *  The following modules need to be enabled in platform.h 
+ *  <ul>
+ *  <li><b><i>for NDEF T2T:</i></b></li><br> RFAL_FEATURE_NFCA and RFAL_FEATURE_T2T
+ *  <li><b><i>for NDEF T3T:</i></b></li><br> RFAL_FEATURE_NFCF
+ *  <li><b><i>for NDEF T4AT:</i></b></li><br> RFAL_FEATURE_NFCA and RFAL_FEATURE_T4T
+ *  <li><b><i>for NDEF T4BT:</i></b></li><br> RFAL_FEATURE_NFCB and RFAL_FEATURE_T4T
+ *  <li><b><i>for NDEF T5T:</i></b></li><br> RFAL_FEATURE_NFCV
+ *  </ul>
+ *  When the user only needs to *read* NDEF from tags (i.e. no NDEF write, no tag format), NDEF_FEATURE_ALL
+ * can be set to false in ndef_poller.h to reduce the code size.
+ *
+ *
+ *  <br><hr>
+ *  <h3>Setting up RFAL</h3>
+ *  Please refer to the RFAL documentation for the proper setup and configuration.
+ *
+ *
+ *  <br><hr>
+ *  <h3>NDEF Resources</h3>
+ *
+ *  Limited memory requirement for message and record handling:
+ *  <ul>
+ *    <li> sizeof(ndefMessage) = 12 bytes
+ *    <li> sizeof(ndefRecord) = 28 bytes
+ *  </ul>
+ *
+ *  Limited memory requirement for supported types handling:
+ *  <ul>
+ *    <li> sizeof(ndefType) = 268 bytes
+ *  </ul>
+ *   ndefType is the union of the following elementary types:
+ *  <ul>
+ *    <li>                       sizeof(ndefTypeRtdDeviceInfo) = 40 bytes
+ *    <li>                       sizeof(ndefTypeRtdText) = 20 bytes
+ *    <li>                       sizeof(ndefTypeRtdUri) = 12 bytes
+ *    <li>                       sizeof(ndefTypeRtdAar) = 16 bytes
+ *    <li>                       sizeof(ndefTypeMedia) = 16 bytes
+ *    <li>                       sizeof(ndefTypeVCard) = 256 bytes
+ *    <li>                       sizeof(ndefTypeWifi) = 20 bytes)
+ *  </ul>
+ *
+ *  Detailed analysis of compiled NDEF modules:
+ * 
+ *  \verbinclude ndef_sizes.txt
+ * 
+ *  <br>
+ */
+ 

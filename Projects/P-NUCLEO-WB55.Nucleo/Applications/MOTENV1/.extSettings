@@ -1,0 +1,14 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\Middlewares\ST\STM32_MotionFX_Library\Inc;..\..\..\..\..\Middlewares\ST\STM32_MotionAR_Library\Inc;..\..\..\..\..\Middlewares\ST\STM32_MotionAW_Library\Inc;..\..\..\..\..\Middlewares\ST\STM32_MotionCP_Library\Inc;..\..\..\..\..\Middlewares\ST\STM32_MotionGR_Library\Inc;..\..\..\..\..\Middlewares\ST\STM32_MotionPM_Library\Inc;..\..\..\..\..\Middlewares\ST\STM32_MotionID_Library\Inc
+[Others]
+Define=USE_IKS01A3
+[Groups]
+Application/User/STM32_WPAN/App=..\STM32_WPAN\App\motenv_server_app.c;..\STM32_WPAN\App\env_server_app.c;..\STM32_WPAN\App\motion_server_app.c;..\STM32_WPAN\App\motion_ext_server_app.c;..\STM32_WPAN\App\motionfx_server_app.c;..\STM32_WPAN\App\motionar_server_app.c;..\STM32_WPAN\App\motionaw_server_app.c;..\STM32_WPAN\App\motioncp_server_app.c;..\STM32_WPAN\App\motiongr_server_app.c;..\STM32_WPAN\App\motionpm_server_app.c;..\STM32_WPAN\App\motionid_server_app.c;..\STM32_WPAN\App\config_server_app.c;..\STM32_WPAN\App\console_server_app.c;..\STM32_WPAN\App\MotionAR_Manager.c;..\STM32_WPAN\App\MotionAW_Manager.c;..\STM32_WPAN\App\MotionCP_Manager.c;..\STM32_WPAN\App\MotionFX_Manager.c;..\STM32_WPAN\App\MotionGR_Manager.c;..\STM32_WPAN\App\MotionID_Manager.c;..\STM32_WPAN\App\MotionPM_Manager.c
+Middlewares/STM32_WPAN=..\..\..\..\..\Middlewares\ST\STM32_WPAN\ble\svc\Src\motenv_stm.c
+Middlewares/STM32_MotionAR_Library=..\..\..\..\..\Middlewares\ST\STM32_MotionAR_Library\Lib\MotionAR_CM4F_wc32_ot.a
+Middlewares/STM32_MotionAW_Library=..\..\..\..\..\Middlewares\ST\STM32_MotionAW_Library\Lib\MotionAW_CM4F_wc32_ot.a
+Middlewares/STM32_MotionCP_Library=..\..\..\..\..\Middlewares\ST\STM32_MotionCP_Library\Lib\MotionCP_CM4F_wc32_ot.a
+Middlewares/STM32_MotionFX_Library=..\..\..\..\..\Middlewares\ST\STM32_MotionFX_Library\Lib\MotionFX_CM4F_wc32_ot.a
+Middlewares/STM32_MotionGR_Library=..\..\..\..\..\Middlewares\ST\STM32_MotionGR_Library\Lib\MotionGR_CM4F_wc32_ot.a
+Middlewares/STM32_MotionID_Library=..\..\..\..\..\Middlewares\ST\STM32_MotionID_Library\Lib\MotionID_CM4F_wc32_ot.a
+Middlewares/STM32_MotionPM_Library=..\..\..\..\..\Middlewares\ST\STM32_MotionPM_Library\Lib\MotionPM_CM4F_wc32_ot.a
